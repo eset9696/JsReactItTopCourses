@@ -5,12 +5,13 @@ import { useNavigate } from "react-router-dom";
 
 const Cards = () => {
   const navigate = useNavigate();
+
   /** Get Card Id event
-   * @param {string} id - id карточки
+   * @param {object} productInfo - info карточки
    */
   const handleClick = (productInfo) => {
     console.log(productInfo?.id);
-    navigate(`/cards/${productInfo?.id}`, {state: productInfo})
+    navigate(`/cards/${productInfo?.id}`, { state: productInfo });
   };
 
   return (
