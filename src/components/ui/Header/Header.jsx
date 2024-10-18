@@ -1,5 +1,7 @@
-import React, {useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import Modal from "../Modal/Modal";
+import useDisclosure from "../../../hooks/useDisclosure";
 
 /** Массив пунктов меню */
 const navItems = [
@@ -14,6 +16,18 @@ const navItems = [
 const Header = () => {
   const location = useLocation();
   
+  const [isOpenSignIn, setOpenSignIn] = useState(false);
+
+  const [isOpenSignUp, setOpenSignUp] = useState(false);
+
+
+  const handleSignIn = () => setOpenSignIn(true);
+
+  const handleSignUp = () => {
+    setOpenSignUp(true);
+  }
+
+
   /**
    * Определяет, активна ли ссылка.
    * @param {string} path - Путь ссылки.
@@ -58,6 +72,96 @@ const Header = () => {
                 })}
             </div>
           </nav>
+          <div id="buttons-wrapper" className="inline-flex items-center">
+            <button
+              onClick={handleSignIn}
+              type="button"
+              className="border-2 text-indigo-500 border-indigo-500 font-medium py-2 px-4 rounded"
+            >
+              Sign In
+            </button>
+            <button
+              onClick={handleSignUp}
+              type="button"
+              className="border-2 bg-indigo-500 border-indigo-500 text-white font-medium py-2 px-4 rounded"
+            >
+              Sign Up
+            </button>
+          </div>
+          {isOpenSignIn && (
+            <Modal
+            isOpen={isOpenSignIn}
+            title="Вход в приложение"
+          >
+            <form action="#">
+              <div className="flex flex-col">
+                <div className="mb-4">
+                  <label htmlFor="full_name">Your login</label>
+                  <input
+                    type="text"
+                    name="login"
+                    className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                    defaultValue=""
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label htmlFor="email">Email Address</label>
+                  <input
+                    type="email"
+                    name="email"
+                    className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                    defaultValue=""
+                    placeholder="email@domain.com"
+                  />
+                </div>
+
+                <div className="mb-4 flex justify-end">
+                  <button className="border-2 border-indigo-500 bg-indigo-500 text-white font-medium py-2 px-4 rounded">
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </form>
+          </Modal>
+          )}
+          {isOpenSignUp && (
+            <Modal
+            isOpen={isOpenSignUp}
+            title="Регистрация в приложении"
+          >
+            <form action="#">
+              <div className="flex flex-col">
+                <div className="mb-4">
+                  <label htmlFor="full_name">Your login</label>
+                  <input
+                    type="text"
+                    name="login"
+                    className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                    defaultValue=""
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label htmlFor="email">Email Address</label>
+                  <input
+                    type="email"
+                    name="email"
+                    className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                    defaultValue=""
+                    placeholder="email@domain.com"
+                  />
+                </div>
+
+                <div className="mb-4 flex justify-end">
+                  <button className="border-2 border-indigo-500 bg-indigo-500 text-white font-medium py-2 px-4 rounded">
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </form>
+          </Modal>
+          )}
         </div>
       </div>
     </header>
