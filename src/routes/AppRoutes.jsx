@@ -16,16 +16,21 @@ const routes = [
  * @returns {JSX.Element} JSX element роута
  */
 
-const renderRoute = ({ path, element, children }) => (
-  <Route key={path} path={path} element={element}>
-    {children && children.map(renderRoute)}
-  </Route>
-);
+const renderRoutes = (routes) => {
+  if (!routes?.length) {
+    return null;
+  }
+  return routes?.map(({ path, element, children }) => (
+    <Route key={path} path={path} element={element}>
+      {children && children.map(renderRoute)}
+    </Route>
+  ));
+};
 
 const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<MainLayout />}>
-      {routes?.map(renderRoute)}
+      {renderRoutes(routes)};
     </Route>
   </Routes>
 );

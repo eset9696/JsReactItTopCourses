@@ -16,7 +16,6 @@ const Modal = ({ isOpen, title, onClose, children }) => {
 
   // Создаем ссылку на DOM-элемент модального окна
   const modalRef = useRef(null);
-
   useEffect(() => {
     // Если модально окно открыто и код выполняется на клиенте
     if (isOpen && typeof window !== "undefined") {

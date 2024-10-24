@@ -1,15 +1,22 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Card from "../components/ui/Card/Card";
-import { data } from "../../data";
 import { useNavigate } from "react-router-dom";
 
 const Cards = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/products")
+    .then((responce) => responce.json())
+    .then((json) => setData(json));
+  }, []);
+
+
   const navigate = useNavigate();
   /** Get Card Id event
    * @param {string} id - id карточки
    */
   const handleClick = (productInfo) => {
-    console.log(productInfo?.id);
     navigate(`/cards/${productInfo?.id}`, {state: productInfo})
   };
 
