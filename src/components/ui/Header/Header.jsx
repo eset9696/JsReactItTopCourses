@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Navigate, NavLink, useLocation, useNavigate } from "react-router-dom";
 import Modal from "../Modal/Modal";
 import useDisclosure from "../../../hooks/useDisclosure";
 import SignInModal from "../../modal/SignInModal";
@@ -21,6 +21,10 @@ const Header = () => {
   const signIn = useDisclosure();
 
   const signUp = useDisclosure();
+
+  const navigate = useNavigate();
+
+const handleOpenCart = () => navigate('/cart');
 
   /**
    * Определяет, активна ли ссылка.
@@ -66,6 +70,29 @@ const Header = () => {
                 })}
             </div>
           </nav>
+          <div className="flex items-center pr-2">
+              <button
+                onClick={handleOpenCart}
+                id="cart"
+                type="button"
+                className={`relative bg-transparent p-1 mr-3 rounded-full    ${
+                  location?.pathname === "/cart"
+                    ? "text-indigo-500 hover:text-indigo-600"
+                    : "text-gray-400 hover:text-gray-500"
+                }`}
+              >
+                <svg
+                  fill="currentColor"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 32 32"
+                  aria-hidden="true"
+                >
+                  <path d="M17 24H21V28H17zM24 24H28V28H24zM17 17H21V21H17zM24 17H28V21H24z"></path>
+                  <path d="M28,11h-6V7c0-1.7-1.3-3-3-3h-6c-1.7,0-3,1.3-3,3v4H4c-0.6,0-1,0.4-1,1c0,0.1,0,0.1,0,0.2l1.9,12.1c0.1,1,1,1.7,2,1.7H15v-2	H6.9L5.2,13H28V11z M12,7c0-0.6,0.4-1,1-1h6c0.6,0,1,0.4,1,1v4h-8V7z"></path>
+                </svg>
+              </button>
+            </div>
           <div id="buttons-wrapper" className="inline-flex items-center">
             <button
               onClick={signIn?.onOpen}

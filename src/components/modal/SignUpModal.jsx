@@ -1,9 +1,30 @@
 import Modal from "../ui/Modal/Modal";
+import useForm from "../../hooks/useForm";
 
 const SignUpModal = ({ isOpen, onClose }) => {
+  const { formValues, formErrors, handleChange, resetForm } = useForm({});
+
+  const handleSubmit = (event) => {
+    event?.preventDefault();
+
+    console.log("formValues", formValues);
+
+    resetForm && resetForm();
+    onClose && onClose();
+  };
+
+  const handleModalClose = () => {
+    onClose && onClose();
+    resetForm && resetForm();
+  };
+
   return (
-    <Modal onClose={onClose} isOpen={isOpen} title="Регистрация в приложении">
-      <form action="#">
+    <Modal
+      onClose={handleModalClose}
+      isOpen={isOpen}
+      title="Регистрация в приложении"
+    >
+      <form action="#" onSubmit={handleSubmit}>
         <div className="flex flex-col">
           <div className="mb-4">
             <label htmlFor="full_name">Your login</label>
@@ -11,8 +32,15 @@ const SignUpModal = ({ isOpen, onClose }) => {
               type="text"
               name="login"
               className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-              defaultValue=""
+              data-validate="text"
+              value={formValues?.login || ""}
+              onChange={handleChange}
+              placeholder="Your login"
+              required
             />
+            <span className="text-red-500 text-xs italic mt-2">
+              {formErrors?.login}
+            </span>
           </div>
 
           <div className="mb-4">
@@ -21,9 +49,15 @@ const SignUpModal = ({ isOpen, onClose }) => {
               type="email"
               name="email"
               className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-              defaultValue=""
+              data-validate="email"
+              value={formValues?.email || ""}
+              onChange={handleChange}
               placeholder="email@domain.com"
+              required
             />
+            <span className="text-red-500 text-xs italic mt-2">
+              {formErrors?.email}
+            </span>
           </div>
 
           <div className="mb-4 flex justify-end">

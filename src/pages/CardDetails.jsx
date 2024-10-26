@@ -1,8 +1,21 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import useProducts from "../store/useProducts";
+import Alert from "../components/ui/Alert/Alert";
+import useDisclosure from "../hooks/useDisclosure";
 
 const CardDetails = () => {
-  const { location, state } = useLocation();
+  const { state } = useLocation();
+
+  const {addToCart} = useProducts();
+
+  const alertData = useDisclosure({});
+
+  const handleAddToCart = () => {
+    addToCart(state);
+    alertData?.onOpen();
+  }
+
   return (
     <section className="card-details">
       <div className="max-w-7xl mx-auto px-2">
@@ -46,12 +59,13 @@ const CardDetails = () => {
               </div>
             )}
             <div className="text-lg font-bold mb-2">{state?.price}$</div>
-            <button className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">
+            <button onClick={handleAddToCart} className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">
               Add to Cart
             </button>
           </div>
         </div>
       </div>
+      <Alert  title="Товар успешно добавлен в корзину!"  subtitle={state.name} isOpen={alertData?.isOpen} onClose={alertData?.onClose} variant="success"/>
     </section>
   );
 };
